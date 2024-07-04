@@ -1,6 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+export const OPTIONS = async () => {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "OPTIONS, GET",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
+};
+
 export const GET = async (
   _: NextRequest,
   { params: { language } }: { params: { language: string } }
