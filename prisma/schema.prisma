@@ -61,3 +61,10 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Translation {
+    id           String @id @default(auto()) @map("_id") @db.ObjectId
+    language     String @unique
+    languageName String @unique
+    data         Json
+}

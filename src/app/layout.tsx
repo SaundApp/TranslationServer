@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
+import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
+import ToastObserver from "@/components/ToastObserver";
 
 export const metadata: Metadata = {
   title: "Translations Manager",
@@ -20,6 +22,8 @@ export default function RootLayout({
         }
       >
         {children}
+        <Toaster />
+        <ToastObserver />
       </body>
     </html>
   );

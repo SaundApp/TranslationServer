@@ -16,7 +16,7 @@ export default async function Navbar() {
 
   return (
     <nav className="flex w-full border-b justify-between items-center gap-4 px-4 sm:py-5">
-      <h4>Saund</h4>
+      <Link href="/" className="z-10">Saund</Link>
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar>
