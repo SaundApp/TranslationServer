@@ -1,5 +1,3 @@
-import { Input } from "../ui/input";
-import { prisma } from "@/lib/prisma";
 import {
   Table,
   TableBody,
@@ -10,7 +8,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "../ui/button";
-// import AddKeyButton from "./AddKeyButton";
+import { Input } from "../ui/input";
+import AddKeyButton from "./AddKeyButton";
 
 export default async function TranslationDataDisplay({
   data,
@@ -23,46 +22,20 @@ export default async function TranslationDataDisplay({
 }) {
   if (typeof data === "string")
     return (
-      <form
-        action={async (form) => {
-          "use server";
-
-          const previous = await prisma.translation.findUnique({
-            where: {
-              language,
-            },
-            select: {
-              data: true,
-            },
-          });
-
-          const updatedData = previous!.data as any;
-          const parent = name
-            ? name.split(".").reduce((acc, key) => acc[key], updatedData)
-            : updatedData;
-
-          parent[form.get("value") as string] = "";
-
-          await prisma.translation.update({
-            where: {
-              language,
-            },
-            data: {
-              data: updatedData,
-            },
-          });
-        }}
-      >
+      <form action="/api/update" method="POST">
+        <input type="text" value={language} hidden name="language" readOnly />
+        <input type="text" value={name} hidden name="name" readOnly />
         <Input defaultValue={data} placeholder="Enter a value" name="value" />
+        <button hidden type="submit">
+          Update
+        </button>
       </form>
     );
-
-  console.log(data);
 
   return (
     <Table>
       <TableCaption>
-        {/* <AddKeyButton language={language} parentKey={name} /> */}
+        <AddKeyButton language={language} parentKey={name} />
       </TableCaption>
       <TableHeader>
         <TableRow>
@@ -82,8 +55,46 @@ export default async function TranslationDataDisplay({
                 data={data[item]}
               />
             </TableCell>
-            <TableCell className="text-right">
-              <Button variant="destructive">Delete</Button>
+            <TableCell className="justify-end flex gap-3">
+              <form action="/api/convert" method="POST">
+                <input
+                  type="text"
+                  value={language}
+                  hidden
+                  name="language"
+                  readOnly
+                />
+                <input
+                  type="text"
+                  value={name ? `${name}.${item}` : item}
+                  hidden
+                  name="name"
+                  readOnly
+                />
+                <Button type="submit">
+                  Convert
+                </Button>
+              </form>
+
+              <form action="/api/delete" method="POST">
+                <input
+                  type="text"
+                  value={language}
+                  hidden
+                  name="language"
+                  readOnly
+                />
+                <input
+                  type="text"
+                  value={name ? `${name}.${item}` : item}
+                  hidden
+                  name="name"
+                  readOnly
+                />
+                <Button variant="destructive" type="submit">
+                  Delete
+                </Button>
+              </form>
             </TableCell>
           </TableRow>
         ))}

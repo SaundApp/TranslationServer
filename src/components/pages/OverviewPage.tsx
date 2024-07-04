@@ -7,11 +7,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import { TypedTranslation } from "@/types";
 
-function checkForWarnings(data: TypedTranslation[]) {
+function checkForWarnings(data: any) {
   const warnings = [];
-  const english = data.find((translation) => translation.language === "en");
+  const english = data.find(
+    (translation: any) => translation.language === "en"
+  );
 
   if (!english) {
     warnings.push("No English translation found");
@@ -19,10 +20,23 @@ function checkForWarnings(data: TypedTranslation[]) {
   }
 
   for (const translation of data) {
-    const keys = Object.keys(english.data);
-    const missingKeys = keys.filter((key) => !translation.data[key]);
+    const missingKeys = [];
 
-    if (missingKeys.length) {
+    for (const key in english.data) {
+      if (typeof english.data[key] === "object") {
+        for (const childKey in english.data[key]) {
+          if (!translation.data[key]?.[childKey]) {
+            missingKeys.push(`${key}.${childKey}`);
+          }
+        }
+      } else {
+        if (!translation.data[key]) {
+          missingKeys.push(key);
+        }
+      }
+    }
+
+    if (missingKeys.length > 0) {
       warnings.push(
         `Missing keys in ${translation.language}: ${missingKeys.join(", ")}`
       );
@@ -34,9 +48,7 @@ function checkForWarnings(data: TypedTranslation[]) {
 
 export default async function OverviewPage() {
   const session = await auth();
-  const translations = (await prisma.translation.findMany(
-    {}
-  )) as TypedTranslation[];
+  const translations = await prisma.translation.findMany({});
 
   return (
     <div className="p-6 grid gap-3 grid-cols-3">
@@ -48,7 +60,9 @@ export default async function OverviewPage() {
             <code>{translations.length}</code> languages available with{" "}
             <code>
               {Math.max(
-                ...translations.map(({ data }) => Object.keys(data).length)
+                ...translations.map(
+                  ({ data }: { data: any }) => Object.keys(data).length
+                )
               )}
             </code>{" "}
             keys.

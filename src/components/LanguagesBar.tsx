@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { revalidatePath } from "next/cache";
 
 export default async function LanguagesBar({ active }: { active?: string }) {
   const languages = await prisma.translation.findMany({
@@ -49,6 +50,7 @@ export default async function LanguagesBar({ active }: { active?: string }) {
                 return redirect("/?error=Language already exists");
               }
 
+              revalidatePath("/", "page");
               return redirect("/");
             }}
             className="flex flex-col gap-3"

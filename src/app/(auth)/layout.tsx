@@ -1,5 +1,3 @@
-import Navbar from "@/components/Navbar";
-
 export default async function Layout({
   children,
 }: Readonly<{
@@ -7,8 +5,8 @@ export default async function Layout({
 }>) {
   return (
     <>
-      <Navbar />
       {children}
+      <p className="lg:hidden m-auto">This page is not available on mobile</p>
     </>
   );
 }

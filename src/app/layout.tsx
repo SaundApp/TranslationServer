@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import ToastObserver from "@/components/ToastObserver";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Translations Manager",
@@ -23,7 +24,9 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
-        <ToastObserver />
+        <Suspense>
+          <ToastObserver />
+        </Suspense>
       </body>
     </html>
   );
