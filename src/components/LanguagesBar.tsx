@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,8 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { Input } from "./ui/input";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 

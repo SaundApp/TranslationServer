@@ -1,6 +1,6 @@
-import LanguagePage from "@/components/LanguagePage";
 import LanguagesBar from "@/components/LanguagesBar";
-import OverviewPage from "@/components/OverviewPage";
+import OverviewPage from "@/components/pages/OverviewPage";
+import LanguagePage from "@/components/pages/LanguagePage";
 
 export default function Home({
   searchParams: { active },

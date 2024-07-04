@@ -5,7 +5,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import { TypedTranslation } from "@/types";
 

@@ -2,7 +2,7 @@
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function ToastObserver() {
   const searchParams = useSearchParams();
@@ -14,6 +14,15 @@ export default function ToastObserver() {
     if (searchParams.has("error")) {
       toast({
         description: searchParams.get("error") as string,
+        variant: "destructive",
+      });
+
+      router.replace(pathName);
+    }
+
+    if (searchParams.has("success")) {
+      toast({
+        description: searchParams.get("success") as string,
       });
 
       router.replace(pathName);
