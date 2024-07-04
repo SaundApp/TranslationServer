@@ -106,3 +106,7 @@ h5 {
 .muted {
   @apply text-sm text-muted-foreground;
 }
+
+code {
+  @apply rounded-lg border px-1;
+}

@@ -22,7 +22,12 @@ export default async function LanguagesBar({ active }: { active?: string }) {
   });
 
   return (
-    <div className="absolute top-0 left-0 h-screen w-64 p-6 pt-24 flex flex-col gap-3 border-r">
+    <div
+      className="w-64 p-6 flex flex-col gap-3 border-r"
+      style={{
+        minHeight: "calc(100vh - 81px)",
+      }}
+    >
       <Dialog>
         <DialogTrigger asChild>
           <Button className="w-full">Add language</Button>
