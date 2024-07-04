@@ -1,13 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+const headers = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "OPTIONS, GET",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
 export const OPTIONS = async () => {
   return new Response(null, {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "OPTIONS, GET",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
+    headers,
   });
 };
 
@@ -26,6 +28,7 @@ export const GET = async (
   return NextResponse.json(data.data, {
     headers: {
       "Cache-Control": "public, max-age=604800, s-maxage=604800",
+      ...headers,
     },
   });
 };
